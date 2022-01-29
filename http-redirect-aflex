@@ -1,0 +1,5 @@
+when HTTP_REQUEST {
+if { [HTTP::path] equals "/"} {
+HTTP::redirect "/XXX/XXX/"
+}
+}
