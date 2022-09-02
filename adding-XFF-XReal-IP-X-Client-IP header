@@ -1,0 +1,5 @@
+when HTTP_REQUEST {
+  HTTP::header replace X-Forwarded-For [IP::client_addr]
+  HTTP::header replace X-Real-IP [IP::client_addr]
+  HTTP::header replace X-Client-IP [IP::client_addr]
+}
