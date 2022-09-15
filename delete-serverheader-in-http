@@ -1,0 +1,5 @@
+when HTTP_RESPONSE {
+if { [HTTP::header exists "Server"] } {
+HTTP::header remove "Server"
+}
+}
