@@ -1,0 +1,2 @@
+slb template http add-cors
+   response-header-insert Access-Control-Allow-Origin:*
