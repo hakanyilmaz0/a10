@@ -1,0 +1,31 @@
+import json
+import requests
+
+veri = { ### user pass detayları tanımlandı , header'a eklenecek.
+       "credentials": {
+      "username": "api",
+       "password": "hakanapi"
+       }
+}
+
+url = requests.post("https://10.0.0.197/axapi/v3/auth",headers={"Content-Type": "application/json"},json=veri,verify=False) ### url e header ve json formatta veri koyuldu.
+#print(type(url))
+response_dict = url.json()
+print(response_dict)
+print(type(response_dict))
+sig = response_dict['authresponse']['signature'] ## token burada elde edildi.
+#print(sig) #token ekrana yazıldı.
+
+## Burada get method başlıyor.
+
+signature = {'Authorization': 'A10'+' '+sig} ##token A10'un istediği formatta json format içine gömüldü.
+print(signature) #format ekrana yazıldı.
+url_get = requests.get("https://10.0.0.197/axapi/v3/slb/ssl-cert/oper/",headers=signature,verify=False)
+
+dosya= open("post-response.txt","wb")
+for i in url_get:
+     dosya.write(i)
+dosya.close()
+print(url_get.status_code)
+print("Restapi sonucu dosyaya yazıldı.")
+
