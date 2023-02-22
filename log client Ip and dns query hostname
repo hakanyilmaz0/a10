@@ -1,0 +1,7 @@
+when DNS_REQUEST {
+
+ set req [DNS::question name]
+ set cip [IP::client_addr]
+
+log local0.6 " Client-Ip: $cip  Host: $req "
+}
