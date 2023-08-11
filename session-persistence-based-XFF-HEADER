@@ -1,0 +1,19 @@
+when HTTP_REQUEST {
+   set value [HTTP::header X-Forwarded-For]
+   if { $value == 0 } {
+      log "Default SG Kullanılacak"
+      log [HTTP::header "X-Forwarded-For"]
+      pool TCPSG
+   } else {
+   set value [HTTP::header X-Forwarded-For]
+   log [HTTP::header "X-Forwarded-For"]
+   set p [persist lookup uie { $value any service } all]
+   if { $p ne "" } {
+       #log " UIE located([lindex $p 0] [lindex $p 1] [lindex $p 2])"
+       node [lindex $p 1] [lindex $p 2]
+   }
+}
+}
+when HTTP_RESPONSE {
+   persist add uie { $value any service } 1800
+}
